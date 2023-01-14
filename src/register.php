@@ -96,11 +96,11 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" class="form-control" minlength=6 maxlength=8 required name="password" id="password" autocomplete="off" placeholder="Password">
+                        <input type="password" class="form-control" minlength=6 required name="password" id="password" autocomplete="off" placeholder="Password">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" class="form-control" minlength=6 maxlength=8 required name="repass" id="repass" autocomplete="off" placeholder="Confirm Password">
+                        <input type="password" class="form-control" minlength=6 required name="repass" id="repass" autocomplete="off" placeholder="Confirm Password">
                     </div>
                     <?php if($validate != ''){?>
                             <div class= "text-danger"><?= $validate; ?></div>

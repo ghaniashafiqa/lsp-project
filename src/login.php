@@ -6,10 +6,16 @@
     $error = '';
     $success = '';
     $errorCaptcha = '';
-    $type = 'U';
+    $query = '';
 
     // mengecek apakah session email tersedia atau tidak, kalau ada nanti dia langsung ke index
-    if(isset($_SESSION['email'])) header('Location: index.php');
+    if(isset($_SESSION['email'])) {
+        if($_SESSION['type'] == "A"){
+            header('Location: admin/dashboard_admin.php');
+        } elseif($_SESSION['type'] == "U"){
+            header('Location: asesi/dashboard_asesi.php');
+        }
+    }
 
     // fungsi tombol submit
     if(isset($_POST['submit'])){
@@ -24,23 +30,23 @@
         // validasi form kosong
         if(!empty(trim($email)) && !empty(trim($password))){
             // mengambil data dari database berdasarkan email
-            $query = "SELECT *  FROM users WHERE email = '$email'";
+            $query = "SELECT * FROM users WHERE email = '$email'";
             $result = mysqli_query($conn, $query);
             $rows = mysqli_num_rows($result);
-
             // cek password pas email udah ketemu
             if($rows != 0){
                 $hash = mysqli_fetch_assoc($result)['password'];
                 if(password_verify($password, $hash) && $_SESSION['code'] == $_POST['captchaCode']){
                     $_SESSION['email'] = $email;
-
-                    //main type
-                    $result2 = mysqli_query($conn, $query);
-                    $rows2 = mysqli_num_rows($result);
-                    if($rows2 == 'U' ){
-                        header('Location: dashboard_asesi.php');
-                    } else{
-                        header('Location: dashboard_admin.php');
+                    //multiuser check
+                    $result = mysqli_query($conn, $query);
+                    $type = mysqli_fetch_assoc($result)['type'];
+                    if($type == 'U' ){
+                        $_SESSION['type'] = $type;
+                        header('Location: asesi/dashboard_asesi.php');
+                    }elseif ($type == 'A' ){
+                        $_SESSION['type'] = $type;
+                        header('Location: admin/dashboard_admin.php');
                     }
                 }
             // gagal akan menampilkan pesan error
@@ -48,7 +54,7 @@
                 $error = 'Login failed! Please enter the right email and password.';
             }
         } else {
-            $error = 'Data must not empty';
+            $error = 'Data must not empty!';
         }
 
         // validasi kode captcha
@@ -92,11 +98,11 @@
                     <?php } ?>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                        <input type="text" class="form-control" required name="email" id="email" autocomplete="off" placeholder="email">
+                        <input type="email" class="form-control" required name="email" id="email" autocomplete="off" placeholder="email">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" class="form-control" minlength=6 maxlength=8 required name="password" id="password" autocomplete="off" placeholder="Password">
+                        <input type="password" class="form-control" minlength=6 required name="password" id="password" autocomplete="off" placeholder="Password">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Security Code</i></span>
