@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <title>Tambah Data Asesor</title>
+    <meta charset="UTF-8">
     <!--<title> Responsiive Admin Dashboard | CodingLab </title>-->
     <link rel="stylesheet" href="../../../assets/css/dashboard_style.css">
     <!-- font awesome -->
@@ -90,47 +91,66 @@
 
                 //ambil data schema
                 $id_schema = $_GET['id_schema']; 
-                $script = "SELECT * FROM certification_schema WHERE id_schema$id_schema = $id_schema"; 
+                $script = "SELECT * FROM certification_schema WHERE id_schema = $id_schema"; 
                 $query = mysqli_query($conn, $script); 
                 $data = mysqli_fetch_array($query); 
 
                 //inisialisasi data
-                $assessor_name = $_POST['assessor_name'];
-                $birth_place = $_POST['birth_place'];
-                $birth_date = $_POST['birth_date'];
-                $nik_number = $_POST['nik_number'];
-                $gender = $_POST['gender'];
-                $nationality = $_POST['nationality'];
-                $address = $_POST['address'];
-                $email = $_POST['email'];
-                $phone_number = $_POST['phone_number'];
-                $education_level = $_POST['education_level'];
-                $bnsp_reg_num = $_POST['bnsp_reg_num'];
-                $exp_date_sertificate = $_POST['exp_date_sertificate'];
-                $institutional_name = $_POST['institutional_name'];
-                $id_schema = $_POST['id_schema'];
-
-                //foto asesor
-                $file_tmp= $_FILES['assessor_photo']['tmp_name'];
-                $type = pathinfo($file_tmp, PATHINFO_EXTENSION); 
-                $data = file_get_contents($file_tmp); 
-                $assessor_photo='data:assets/img/' . $type.';base64,'. base64_encode($data);
-            
-                // Insert data into the database
-                $sql = "INSERT INTO data_asesor (assessor_name, tempat_lahir, birth_date, nik_number, gender, nationality, address, email, phone_number, education_level, 
-                bnsp_reg_num, exp_date_sertificate, institutional_name, id_schema, assessor_photo)
-                VALUES ('$assessor_name', '$birth_place', '$birth_date', '$nik_number', '$gender', '$nationality', '$address', '$email', '$phone_number', '$education_level', '$bnsp_reg_num', '$exp_date_sertificate', 
-                '$institutional_name', '$id_schema', 'assessor_photo')";
-                $result = mysqli_query($conn, $sql);
+              if (isset($_POST['submit'])) {
+                if(isset($_FILES['assessor_photo'])){
+                  $assessor_name = $_POST['assessor_name'];
+                  $birth_place = $_POST['birth_place'];
+                  $birth_date = $_POST['birth_date'];
+                  $nik_number = $_POST['nik_number'];
+                  $gender = $_POST['gender'];
+                  $nationality = $_POST['nationality'];
+                  $address = $_POST['address'];
+                  $email = $_POST['email'];
+                  $phone_number = $_POST['phone_number'];
+                  $education_level = $_POST['education_level'];
+                  $bnsp_reg_num = $_POST['bnsp_reg_num'];
+                  $exp_date_sertificate = $_POST['exp_date_sertificate'];
+                  $institutional_name = $_POST['institutional_name'];
+                  $id_schema = $_POST['id_schema'];
+  
+                  //foto asesor
+                  $file_tmp = $_FILES['assessor_photo']['tmp_name'];
+                  $type = pathinfo($file_tmp, PATHINFO_EXTENSION);
+                  $data = file_get_contents($file_tmp);
+                  $assessor_photo = 'data:assets/img/' . $type . ';base64,' . base64_encode($data);
+  
+                  // Insert data into the database
+                  $sql = "INSERT INTO data_asesor (assessor_name, tempat_lahir, birth_date, nik_number, gender, nationality, address, email, phone_number, education_level, 
+                  bnsp_reg_num, exp_date_sertificate, institutional_name, id_schema, assessor_photo)
+                  VALUES ('$assessor_name', '$birth_place', '$birth_date', '$nik_number', '$gender', '$nationality', '$address', '$email', '$phone_number', '$education_level', '$bnsp_reg_num', '$exp_date_sertificate', 
+                  '$institutional_name', '$id_schema', '$assessor_photo')";
+                  
+                  //check if the data inserted to database
+                  $result = mysqli_query($conn, $sql);
+                    if($result) {
+                      header("location: readers.php");
+                    } else {
+                      echo "gagal mengupload data";
+                    }
+                }
+              }
               ?>
             </div>
             <h1 class="text-center">Tambah Data Asesor</h1>
-            <form action="submit-data-asesor.php" method="post">
-              <center><h4>Data Skema</h4></center>
-              <center><h4>Data Asesor</h4></center>
+            <form method="post" enctype="multipart/form-data">
+              <h4 class="text-center">Data Skema</h4>
+                <div class="form-group">
+                    <label>ID Skema</label>
+                    <input type="number" class="form-control" name="id_schema" required value="<?= $data['id_schema']?>">
+                </div>
+                <div class="form-group">
+                    <label>Nama Skema</label>
+                    <input type="text" class="form-control" name="schema_name" required value="<?= $data['schema_name']?>">
+                </div>
+                <h4 class="text-center">Data Asesor</h4>
                 <div class="form-group">
                     <label>Nama Lengkap</label>
-                    <input type="text" class="form-control" placeholder="Nama Lengkap" name="assessor_name" required>
+                    <input type="text" class="form-control" name="assessor_name" required>
                 </div>
                 <div class="form-group">
                     <label>Tempat Lahir</label>
@@ -173,7 +193,11 @@
                 </div>
                 <div class="form-group">
                     <label>NIK</label>
-                    <input type="text" class="form-control" placeholder="No. NIK" name="nik_number" required>
+                    <input type="number" class="form-control" placeholder="No. NIK" name="nik_number" required>
+                </div>
+                <div class="form-group">
+                    <label>Pas Foto</label>
+                    <input style="padding: 5px;" type="file" class="form-control" name="assessor_photo" required>
                 </div>
                 <div class="form-group">
                     <label>Jenis Kelamin</label>
@@ -204,7 +228,7 @@
                 </div>
                 <div class="form-group">
                     <label>No. Telp</label>
-                    <input type="text" class="form-control" placeholder="Nomor Hp yg aktif" name="phone_number" required>
+                    <input type="number" class="form-control" placeholder="Nomor Hp yg aktif" name="phone_number" required>
                 </div>
                 <div class="form-group">
                     <label>Pendidikan Terakhir</label>
@@ -217,7 +241,7 @@
                 </div>
                 <div class="form-group">
                     <label>Nomor Register BNSP</label>
-                    <input type="text" class="form-control" placeholder="No. Reg BNSP" name="bnsp_reg_num" required>
+                    <input type="number" class="form-control" placeholder="No. Reg BNSP" name="bnsp_reg_num" required>
                 </div>
                 <div class="form-group">
                     <label>Masa Berlaku Sertifikat Asesor</label>
@@ -227,7 +251,7 @@
                     <label>Nama Lembaga/Perusahaan</label>
                     <input type="text" class="form-control" placeholder="Nama perusahaan tempat kerja" name="institutional_name" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="submit" class="btn btn-success" name="submit" value="Add">
             </form>
         </div>
     </div>
