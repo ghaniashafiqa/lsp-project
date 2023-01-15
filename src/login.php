@@ -11,9 +11,9 @@
     // mengecek apakah session email tersedia atau tidak, kalau ada nanti dia langsung ke index
     if(isset($_SESSION['email'])) {
         if($_SESSION['type'] == "A"){
-            header('Location: admin/dashboard_admin.php');
+            header('Location: ../admin/dashboard_admin.php');
         } elseif($_SESSION['type'] == "U"){
-            header('Location: asesi/dashboard_asesi.php');
+            header('Location: ../asesi/dashboard_asesi.php');
         }
     }
 
@@ -43,10 +43,10 @@
                     $type = mysqli_fetch_assoc($result)['type'];
                     if($type == 'U' ){
                         $_SESSION['type'] = $type;
-                        header('Location: asesi/dashboard_asesi.php');
+                        header('Location: ../asesi/dashboard_asesi.php');
                     }elseif ($type == 'A' ){
                         $_SESSION['type'] = $type;
-                        header('Location: admin/dashboard_admin.php');
+                        header('Location: ../admin/dashboard_admin.php');
                     }
                 }
             // gagal akan menampilkan pesan error
@@ -106,7 +106,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Security Code</i></span>
-                        <img src="captcha/captcha.php">
+                        <img src="../captcha/captcha.php">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Enter Security Code</i></span>

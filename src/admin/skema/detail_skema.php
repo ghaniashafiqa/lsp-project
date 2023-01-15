@@ -132,6 +132,7 @@
                     <h3>Action</h3>
                     <a href="edit_skema.php?id_schema=<?= $data['id_schema'] ?>" class="btn btn-warning">Update</a>
                     <a href="../asesor/create_asesor.php?id_schema=<?= $data['id_schema'] ?>" class="btn btn-info">Tambah Data Asesor</a>
+                    <a href="../asesor/update_asesor.php?id_schema=<?= $data['id_schema'] ?>" class="btn btn-info">Edit Data Asesor</a>
                     <input type="submit" name="hapus" value="Delete" class="btn btn-danger"> 
                   </form> 
                 </div>

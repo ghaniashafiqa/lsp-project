@@ -34,7 +34,7 @@
           </a>
         </li>
         <li>
-          <a href="list_asesor.php">
+          <a href="../admin/asesor/list_asesor.php">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span class="links_name">Asesor</span>
           </a>
@@ -46,7 +46,7 @@
           </a>
         </li>
         <li>
-          <a href="list_skema.php">
+          <a href="../admin/skema/list_skema.php">
           <i class="fa-solid fa-folder-open"></i>
             <span class="links_name">Skema</span>
           </a>

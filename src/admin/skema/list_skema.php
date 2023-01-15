@@ -31,7 +31,7 @@
           </a>
         </li>
         <li>
-          <a href="list_asesor.php">
+          <a href="../asesor/list_asesor.php">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span class="links_name">Asesor</span>
           </a>
@@ -98,7 +98,7 @@
                         }
 
                         if(isset($_GET['search'])){ 
-                            $search = $_GET['search']; 
+                            $search = mysqli_real_escape_string($conn, $_GET['search']); 
                             $sql="SELECT * FROM certification_schema WHERE schema_name LIKE '%$search%' ORDER BY id_schema ASC LIMIT $posisi, $batas"; 
                         }else{ 
                             $sql="SELECT * FROM certification_schema ORDER BY id_schema ASC LIMIT $posisi, $batas";
