@@ -1,0 +1,213 @@
+<?php
+
+// connect to the database
+require "../../../config/config.php";
+
+// check if the form has been submitted
+if(isset($_POST['submit'])) {
+  // retrieve the form data by using the element's name attributes value as key
+  $ktp = mysqli_real_escape_string($db, $_POST['ktp']);
+  $name = mysqli_real_escape_string($db, $_POST['name']);
+  $gender = mysqli_real_escape_string($db, $_POST['gender']);
+  $phone = mysqli_real_escape_string($db, $_POST['phone']);
+  $email = mysqli_real_escape_string($db, $_POST['email']);
+  $birth_place = mysqli_real_escape_string($db, $_POST['birth_place']);
+  $birth_date = mysqli_real_escape_string($db, $_POST['birth_date']);
+  $province = mysqli_real_escape_string($db, $_POST['province']);
+  $city = mysqli_real_escape_string($db, $_POST['city']);
+  $address = mysqli_real_escape_string($db, $_POST['address']);
+  $education = mysqli_real_escape_string($db, $_POST['education']);
+  $university = mysqli_real_escape_string($db, $_POST['university']);
+  $program = mysqli_real_escape_string($db, $_POST['program']);
+  $semester = mysqli_real_escape_string($db, $_POST['semester']);
+  $internship_company = mysqli_real_escape_string($db, $_POST['internship_company']);
+  $business_field = mysqli_real_escape_string($db, $_POST['business_field']);
+
+  // insert the form data into the database
+  $query = "INSERT INTO registrations (ktp, name, gender, phone, email, birth_place, birth_date, province, city, address, education, university, program, semester, internship_company, business_field) 
+            VALUES ('$ktp', '$name', '$gender', '$phone', '$email', '$birth_place', '$birth_date', '$province', '$city', '$address', '$education', '$university', '$program', '$semester', '$internship_company', '$business_field')";
+  mysqli_query($db, $query);
+
+  // display a message to confirm the form was submitted successfully
+  echo "Your registration has been submitted successfully!";
+}
+
+?>
+
+<!-- create the form -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formulir Biodata Calon Peserta Uji Kompetensi</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            /* Always display the drop down caret */
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                color: #2c3e50;
+            }
+
+            /* A few custom styles for date inputs */
+            input[type="date"] {
+                appearance: none;
+                -webkit-appearance: none;
+                color: #95a5a6;
+                /*font-family: "Helvetica", arial, sans-serif;*/
+                font-size: 15px;
+                border:1px solid #95a5a6;
+                /*background:whitesmoke;*/
+                padding:5px;
+                display: inline-block !important;
+                visibility: visible !important;
+            }
+
+            input[type="date"], focus {
+                color: #95a5a6;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+            }
+        </style>
+    </head>
+<body background="bgform.jpg" style="height: 100%">
+
+<div class="wrap">
+    <img src="lsp-telematika.png" width="800px">
+</div>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container" style="text-align:center;background-color: rgb(31, 45, 61);color: rgb(255, 210, 0);font-weight: bold;">
+        <h6>FR.APL-01. BIODATA LENGKAP CALON PESERTA UJI KOMPETENSI</h6>
+    </div>
+</nav>
+<div class="container" style="background-color: whitesmoke; margin-top:60px; padding: 20px 0 50px 0;">
+    <div class="col-xs-12">
+    <form method="post" action="">
+        <div class="col-md-12">
+            <div style="text-align:center; background-color: rgb(31, 45, 61); color: rgb(255, 210, 0); font-weight: bold">Informasi Personal</div>
+            <div class="form-group">
+                <td><label for="ktp">No.KTP:</label></td>
+                <td><input type="text" required class="form-control" placeholder="NO KTP" name="ktp" required></td>
+            </div>
+            <div class="form-group">
+                <td><label for="name">Nama Lengkap:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Nama Lengkap" name="name" required></td>
+            </div>
+            <div class="form-group">
+                <td><label for="gender">Jenis Kelamin:</label></td>
+                <td><input type="radio" name="gender" value="male"> Male
+                    <input type="radio" name="gender" value="female"> Female</td>
+            </div>
+            <div class="form-group">
+                <td><label for="phone">No Telp:</label></td>
+                <td><input type="tel" required class="form-control" placeholder="Nomor Hp yg aktif" name="phone"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" required class="form-control" placeholder="Email Pribadi" name="email" required></td>
+            </div>
+            <div class="form-group">
+                <td><label for="birth_place">Tempat Lahir:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Tempat Lahir" name="birth_place"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="birth_date">Tanggal Lahir:</label></td>
+                <td><input type="date" required class="form-control" name="birth_date"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="province">Provinsi:</label></td>
+                <td><select class="combobox form-control select2" name="province">
+                    <option value="aceh">Aceh</option>
+                    <option value="Sumut">Sumatera Utara</option>
+                    <option value="sumbar">Sumatera Barat</option>
+                    <option value="Riau">Riau</option>
+                    <option value="Jambi">Jambi</option>
+                    <option value="Sumsel">Sumatera Selatan</option>
+                    <option value="Bengkulu">Bengkulu</option>
+                    <option value="Lampung">Lampung</option>
+                    <option value="BaBel">Kep. Bangka Belitung</option>
+                    <option value="kepRiau">Kepulauan Riau</option>
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Jabar">Jawa Barat</option>
+                    <option value="Banten">Banten</option>
+                    <option value="Jateng">Jawa Tengah</option>
+                    <option value="Yogyakarta">Yogyakarta</option>
+                    <option value="Jatim">Jawa Timur</option>
+                    <option value="Kalbar">Kalimantan Barat</option>
+                    <option value="Kalteng">Kalimantan Tengah</option>
+                    <option value="Kalsel">Kalimantan Selatan</option>
+                    <option value="Kaltim">Kalimantan Timur</option>
+                    <option value="Kaltra">Kalimantan Utara</option>
+                    <option value="Bali">Bali</option>
+                    <option value="NTT">Nusa Tenggara Timur</option>
+                    <option value="NTB">Nusa Tenggara Barat</option>
+                    <option value="Sulut">Sulawesi Utara</option>
+                    <option value="Sulteng">Sulawesi Tengah</option>
+                    <option value="Sulsel">Sulawesi Selatan</option>
+                    <option value="Sultengg">Sulawesi Tenggara</option>
+                    <option value="Sulbar">Sulawesi Barat</option>
+                    <option value="Gorontalo">Gorontalo</option>
+                    <option value="Maluku">Maluku</option>
+                    <option value="Maluku Utara">Maluku Utara</option>
+                    <option value="Papua">Papua</option>
+                    <option value="Papua Barat">Papua Barat</option>
+                </select></td>
+            </div>
+            <div class="form-group">
+                <td><label for="city">Kota:</label></td>
+                <td><input type="text" class="combobox form-control select2" name="city"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="address">Alamat:</label></td>
+                <td><textarea class="form-control" placeholder="Alamat lengkap sesuai KTP" name="address"></textarea></td>
+            </div>
+        <div class="col-md-12">
+            <h3 style="text-align:center;background-color: rgb(31, 45, 61);color: rgb(255, 210, 0);font-weight: bold;" align="center">Informasi Data Pendidikan</h3>
+            <div class="form-group">
+                <td><label for="education">Pendidikan Terakhir:</label></td>
+                <td><select class="form-control" name="education">
+                    <option value="s3">S3</option>
+                    <option value="s2">S2</option>
+                    <option value="s1">S1</option>
+                    <option value="d4">D4</option>
+                    <option value="d3">D3</option>
+                    <option value="d2">D2</option>
+                    <option value="d1">D1</option>
+                    <option value="sma">SMA/SEDERAJAT</option>
+                    <option value="smp">SMP</option>
+                    <option value="sd">SD</option>
+                </select></td>
+            </div>
+            <div class="form-group">
+                <td><label for="university">Universitas:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Lembaga atau Institusi Pendidikan" name="university"></td>
+            </div>    
+            <div class="form-group">            
+                <td><label for="program">Program Studi:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Jurusan" name="program"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="semester">Semester:</label></td>
+                <td><input type="number" required class="form-control" placeholder="Semester" name="semester"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="internship_company">Perusahaan Tempat Magang:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Nama perusahaan tempat praktek kerja" name="internship_company"></td>
+            </div>
+            <div class="form-group">
+                <td><label for="business_field">Bidang Usaha:</label></td>
+                <td><input type="text" required class="form-control" placeholder="Bidang usaha perusahaan tempat praktek" name="business_field"></td>
+            </div>
+            <div class="form-group" style="padding-top:10px;padding-bottom:10px;">
+                <input style="padding:5px;width: 100%" class="btn btn-primary btn-lg col-xs-12" type="submit" name="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="https://ui.lspbnsp.id/assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ui.lspbnsp.id/assets/plugins/select2-4.0.3/dist/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.js"></script>
+</html>

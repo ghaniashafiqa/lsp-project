@@ -1,11 +1,11 @@
 <!-- panggil config -->
-<?php require "../../config/config.php"?>
+<?php require "../../../config/config.php"?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>View Data Asesor</title>
-    <link rel="stylesheet" href="../../assets/css/dashboard_style.css">
+    <link rel="stylesheet" href="../../../assets/css/dashboard_style.css">
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/021b758c3a.js" crossorigin="anonymous"></script>
     <!-- Boxicons CDN Link -->
@@ -164,6 +164,6 @@
         </div>
     </section>
 
-    <script src="../../assets/js/script.js"></script>
+    <script src="../../../assets/js/script.js"></script>
 </body>
 </html>
